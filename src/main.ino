@@ -37,8 +37,8 @@ void setup()
 
   tft.fillScreen(GC9A01A_BLACK); // Clear the screen
 
-  show_dial();
-  tft.drawBitmap(0,0,gImage_figure1,239,240,32767);
+
+
 }
 
 void loop()
@@ -57,9 +57,10 @@ void tick(){
   erase_minute_niddle(80,4,GC9A01A_BLACK);
   erase_hour_niddle(50,6,GC9A01A_BLACK);
 
-
+  tft.drawRGBBitmap(0,0,myBitmap,240,239);
   tft.fillCircle(120,120,4,GC9A01A_WHITE);
-
+  
+  show_dial();
   show_RTS_from_second(73, 70, 2, GC9A01A_PINK, GC9A01A_BLACK);
   show_second_ball_niddle(4,90,GC9A01A_RED);
   show_minute_niddle(80,4,GC9A01A_BLUE);

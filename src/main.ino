@@ -5,7 +5,10 @@
 #include <string>
 #include <math.h>
 #include "figure1.h"
-
+#define maxx 240
+#define maxy 240
+#define transparent B0000100000100001
+using namespace std;
 hw_timer_t *timer = NULL;
 volatile uint32_t ms = 50000000;
 
@@ -16,6 +19,44 @@ volatile uint32_t ms = 50000000;
 
 Adafruit_GC9A01A tft = Adafruit_GC9A01A(TFT_CS, TFT_DC, TFT_RST);
 
+class block_rectangle{
+  public:
+    int center_position_x=0,center_position_y=0;
+    int length_x=0,length_y=0,rotate_angle=0;
+    int center_bias_x=0,center_bias_y=0;
+    void print(int *canvas){
+      
+    }
+
+};
+class layer{
+  unsigned short change[maxx*maxy/10];
+  public:
+    void 
+};
+class canvas{
+  unsigned short pics[maxx][maxy];
+  public:
+    
+    void set_background(unsigned short *fig){
+      for(int i=0;i<maxx;i++){
+        for(int j=0;j<maxy;j++){
+          pics[i][j]=fig[i*maxx+j];
+        }
+      }
+    }
+    void show(){
+      for(int i=0;i<maxx;i++){
+        for(int j=0;j<maxy;j++){
+          tft.drawPixel(i,j,pics[i][j]);
+        }
+      }
+    }
+    void update(unsigned short *fig){
+
+    }
+
+};
 
 void setup()
 {

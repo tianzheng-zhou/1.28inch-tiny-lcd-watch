@@ -17,7 +17,7 @@ using namespace std;
 #include "figures/figure2.h"
 
 hw_timer_t *timer = NULL;
-volatile uint32_t ms = 86380000;
+volatile uint32_t ms = 0;
 
 #define FIG myBitmap2
 #define WIDTH 240
@@ -582,6 +582,8 @@ void setup()
   // 启动定时器
   timerAlarmEnable(timer);
 
+  pinMode(21,OUTPUT);
+  digitalWrite(21,HIGH);
 
   convertTo2DArray(digital_font, array_of_digital_font);
 
@@ -1090,7 +1092,7 @@ void choose_bitmap_triangle_tofill(int16_t x0, int16_t y0, int16_t x1, int16_t y
 void IRAM_ATTR onTimer()
 {
   ms++;
-  if (ms == 86400000)
+  if (ms >= 86400000)
   {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     ms = 0;
   }

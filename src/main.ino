@@ -590,8 +590,8 @@ void setup()
   tft.begin();
   tft.setRotation(0); // Set the rotation if needed
 
-  // tft.fillScreen(GC9A01A_BLACK); // Clear the screen
-  
+  tft.fillScreen(GC9A01A_BLACK); // Clear the screen
+
   tft.drawRGBBitmap(0, 0, FIG, 240, 240);
   tft.drawRGBBitmap(0, 0, FIG, 240, 240);
   show_dial();

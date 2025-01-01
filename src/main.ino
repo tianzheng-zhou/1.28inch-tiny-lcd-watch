@@ -4,20 +4,18 @@
 #include <Arduino.h>
 #include <string>
 #include <math.h>
-<<<<<<< HEAD
-#include "figure1.h"
+
 #define maxx 240
 #define maxy 240
 #define transparent B0000100000100001
 using namespace std;
-=======
+
 #include <vector>
 #include "font5_7.h"
 
 #include "figures/figure1.h"
 #include "figures/figure2.h"
 
->>>>>>> eda3e2f8ac3f8628b5a3a404d544d2b36bde62a5
 hw_timer_t *timer = NULL;
 volatile uint32_t ms = 50000000;
 
@@ -40,7 +38,6 @@ volatile uint32_t ms = 50000000;
 
 Adafruit_GC9A01A tft = Adafruit_GC9A01A(TFT_CS, TFT_DC, TFT_RST);
 
-<<<<<<< HEAD
 class block_rectangle{
   public:
     int center_position_x=0,center_position_y=0;
@@ -54,7 +51,7 @@ class block_rectangle{
 class layer{
   unsigned short change[maxx*maxy/10];
   public:
-    void 
+  
 };
 class canvas{
   unsigned short pics[maxx][maxy];
@@ -79,14 +76,12 @@ class canvas{
     }
 
 };
-=======
 // struct change
 // {
 //   unsigned char x;
 //   unsigned char y;
 //   unsigned short color;
 // };
->>>>>>> eda3e2f8ac3f8628b5a3a404d544d2b36bde62a5
 
 bool array_of_digital_font[11][7][8]{};
 

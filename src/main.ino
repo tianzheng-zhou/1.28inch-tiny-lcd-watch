@@ -17,7 +17,7 @@ using namespace std;
 #include "figures/figure2.h"
 
 hw_timer_t *timer = NULL;
-volatile uint32_t ms = 50000000;
+volatile uint32_t ms = 86380000;
 
 #define FIG myBitmap2
 #define WIDTH 240
@@ -76,6 +76,7 @@ class canvas{
     }
 
 };
+
 // struct change
 // {
 //   unsigned char x;
@@ -106,7 +107,7 @@ public:
     show_dial_temp_figure();
     _show_RTS_from_second_temp_figure(69, 70, 2, GC9A01A_PURPLE);
 
-    show_hour_niddle_temp_figure(50, 6, GC9A01A_GREEN);
+    show_hour_niddle_temp_figure(50, 8, GC9A01A_GREEN);
     show_minute_niddle_temp_figure(80, 4, GC9A01A_BLUE);
     show_second_ball_niddle_temp_figure(4, 90, GC9A01A_RED);
     _fill_circle_temp_figure(120, 120, 4, GC9A01A_WHITE);
@@ -606,10 +607,7 @@ void loop()
     //tick();
   }
 
-  if (ms == 86400000)
-  {
-    ms = 0;
-  }
+
   
 }
 
@@ -1092,6 +1090,10 @@ void choose_bitmap_triangle_tofill(int16_t x0, int16_t y0, int16_t x1, int16_t y
 void IRAM_ATTR onTimer()
 {
   ms++;
+  if (ms == 86400000)
+  {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    ms = 0;
+  }
 }
 
 void convertTo2DArray(const unsigned char font[11][7], bool output[11][7][8]) {

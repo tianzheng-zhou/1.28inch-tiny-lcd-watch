@@ -5,6 +5,7 @@
 #include <string>
 #include <math.h>
 #include <vector>
+#include "font5_7.h"
 
 #include "figures/figure1.h"
 #include "figures/figure2.h"
@@ -38,9 +39,11 @@ Adafruit_GC9A01A tft = Adafruit_GC9A01A(TFT_CS, TFT_DC, TFT_RST);
 //   unsigned short color;
 // };
 
+bool array_of_digital_font[11][7][8]{};
+
 class watch
 {
-public:
+private:
   unsigned short pre_figure[WIDTH][HEIGHT]{0};
   unsigned short figure[WIDTH][HEIGHT]{0};
 
@@ -57,6 +60,7 @@ public:
   {
     _bitmap_on_temp_figure();
     show_dial_temp_figure();
+    _show_RTS_from_second_temp_figure(69, 70, 2, GC9A01A_PURPLE);
 
     show_hour_niddle_temp_figure(50, 6, GC9A01A_GREEN);
     show_minute_niddle_temp_figure(80, 4, GC9A01A_BLUE);
@@ -68,6 +72,8 @@ public:
     upload_change_to_screen();
     _change_pre_figure();
   }
+
+private:
 
   void upload_change_to_screen()
   {
@@ -443,7 +449,7 @@ public:
   }
 
 // 显示RTS时间
-  void _show_RTS_from_second_temp_figure(int x, int y, int size, short color, short back_color)
+  void _show_RTS_from_second_temp_figure(int x, int y, int size,unsigned short color)
 {
   /*
   这个函数用来显示RTS时间（从秒获取）
@@ -454,9 +460,7 @@ public:
   color:文字颜色
   back_color:背景颜色
   */
-  tft.setTextSize(size);   // Set text size
-  tft.setTextColor(color); // Set text color
-  tft.setCursor(x, y);     // Set the cursor position
+  
 
   int total_second = ms / 1000;
 
@@ -499,16 +503,23 @@ public:
 
   strcpy(rts_char, rts.c_str());
 
-  for (int i = 0; i < rts.length(); i++)
-  {
-    choose_bitmap_rect_tofill(x + i * size * 6, y, size * 5, size * 7);
-    // tft.fillRect(x + i * (size * 6), y, size * 5, size * 7, back_color);
-  }
-  // tft.fillScreen(back_color);
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 7; j++){
+      for(int k=0;k<8;k++){
+        if(array_of_digital_font[rts_char[i] - '0'][j][7-k] == 1){
+          //_write_pixel_temp_figure(x+k+i*6, y+j, color);
+          _fillrect_temp_figure(x+size*k+size*i*6, y+size*j, size, size, color);
+        }
+      }
 
-  tft.println(rts_char); // Print text
+
+      
+    }
+  }
+  
 }
 };
+
 
 
 void setup()
@@ -525,6 +536,9 @@ void setup()
 
   // 启动定时器
   timerAlarmEnable(timer);
+
+
+  convertTo2DArray(digital_font, array_of_digital_font);
 
   tft.begin();
   tft.setRotation(0); // Set the rotation if needed
@@ -1034,4 +1048,14 @@ void choose_bitmap_triangle_tofill(int16_t x0, int16_t y0, int16_t x1, int16_t y
 void IRAM_ATTR onTimer()
 {
   ms++;
+}
+
+void convertTo2DArray(const unsigned char font[11][7], bool output[11][7][8]) {
+    for (int i = 0; i < 11; ++i) {
+        for (int j = 0; j < 7; ++j) {
+            for (int k = 0; k < 8; ++k) {
+                output[i][j][k] = (font[i][j] >> k) & 1;
+            }
+        }
+    }
 }

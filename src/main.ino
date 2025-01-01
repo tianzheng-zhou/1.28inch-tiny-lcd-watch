@@ -18,6 +18,9 @@ using namespace std;
 
 hw_timer_t *timer = NULL;
 volatile uint32_t ms = 0;
+volatile uint32_t us = 0;
+
+#define LIGHT 10
 
 #define FIG myBitmap2
 #define WIDTH 240
@@ -576,8 +579,8 @@ void setup()
   // 附加中断处理函数
   timerAttachInterrupt(timer, &onTimer, true);
 
-  // 设置报警值为1000000（即1毫秒）
-  timerAlarmWrite(timer, 1000, true);
+  // 设置报警值为1000（即1毫秒）
+  timerAlarmWrite(timer, 10, true);
 
   // 启动定时器
   timerAlarmEnable(timer);
@@ -1092,9 +1095,22 @@ void choose_bitmap_triangle_tofill(int16_t x0, int16_t y0, int16_t x1, int16_t y
 
 void IRAM_ATTR onTimer()
 {
-  ms++;
+  us++;
+  static int cnt=0;
+  
+  cnt++;
+  if (cnt >= LIGHT){
+    cnt = 0;
+    digitalWrite(21,HIGH);
+  }else{
+    digitalWrite(21,LOW);
+  }
+  if (us >= 100){
+    us = 0;
+    ms++;
+  }
   if (ms >= 86400000)
-  {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+  {
     ms = 0;
   }
 }

@@ -20,7 +20,7 @@ hw_timer_t *timer = NULL;
 volatile uint32_t ms = 0;
 volatile uint32_t us = 0;
 
-#define LIGHT 10
+#define LIGHT 0
 
 #define FIG myBitmap2
 #define WIDTH 240
